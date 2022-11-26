@@ -6,7 +6,7 @@ const config = require ('./server/config');
 require('./database');
 
 
-//otra
+//Configuracion server en config
 
 const app = config(express());
 

@@ -14,7 +14,7 @@ module.exports = app => {
     app.set('port', process.env.PORT || 3000);
 
     //Configuracion de Handlebars
-    app.set('views', path.join(__dirname, 'views'));
+    app.set('views', path.join(__dirname, '../views'));
     app.engine('.hbs', exphbs.engine({
 
         defaultLayout: 'main',

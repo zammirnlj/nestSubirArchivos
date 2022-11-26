@@ -3,6 +3,7 @@ const exphbs = require ('express-handlebars');
 const morgan = require('morgan');
 const multer = require('multer');
 const express = require('express');
+const erroHandler = require('errorhandler');
 const routes = require('../routes/index');
 
 
@@ -10,7 +11,7 @@ module.exports = app => {
 
 
     //configuracion server
-    app.set('port', process.env.PORT || 3001);
+    app.set('port', process.env.PORT || 3000);
 
     //Configuracion de Handlebars
     app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +38,13 @@ module.exports = app => {
     //routes
     routes(app);
 
+    //static files
+    app.use('/public',express.static(path.join(__dirname,'../public')))
+
     //errohabdlers
+    if ('development' === app.get('env')){
+        app.use(erroHandler);
+    }
 
     return app;
 

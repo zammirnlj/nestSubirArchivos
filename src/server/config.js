@@ -28,9 +28,24 @@ module.exports = app => {
     
 
     //midlewares
+    const storage = multer.diskStorage({
+        destination: path.join(__dirname,'../public/upload'),
+
+        filename: (req, file,cb) => {
+            cb(null, file.originalname);
+        }
+    });
 
     app.use(morgan('dev'));
-    app.use(multer({dest: path.join(__dirname, '../public/upload/temp')}).single('image'));
+    //app.use(multer({dest: path.join(__dirname, '../public/upload/temp')}).single('image'));
+
+    app.use (multer({
+       
+        storage,
+        dest: path.join(__dirname,'../public/upload/temp')
+
+}).single('image'))
+    
     //formulario recibir datos
     app.use(express.urlencoded({extended: false}));
     //manejo de likes

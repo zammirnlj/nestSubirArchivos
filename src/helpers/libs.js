@@ -1,5 +1,5 @@
 //Funciones que podamos reutilizar
-
+/*
 const {randomNumber} = require('../helpers/libs');
 
 const helpers = {};
@@ -12,4 +12,4 @@ helpers.randomNumber = () => {
     return randomNumber;
 };
 
-module.exports = helpers;
+module.exports = helpers;*/

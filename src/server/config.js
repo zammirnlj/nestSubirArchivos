@@ -5,6 +5,8 @@ const multer = require('multer');
 const express = require('express');
 const erroHandler = require('errorhandler');
 const routes = require('../routes/index');
+const uuid = require('uuid').v4
+const { randomUUID } = require('crypto');
 
 
 module.exports = app => {
@@ -32,7 +34,7 @@ module.exports = app => {
         destination: path.join(__dirname,'../public/upload'),
 
         filename: (req, file,cb) => {
-            cb(null, file.originalname);
+            cb(null, uuid() + path.extname(file.originalname).toLocaleLowerCase());
         }
     });
 
@@ -42,7 +44,16 @@ module.exports = app => {
     app.use (multer({
        
         storage,
-        dest: path.join(__dirname,'../public/upload/temp')
+        dest: path.join(__dirname,'../public/upload/temp'),
+       // limits: (fileSize: 3000000),
+        fileFilter: (req, file, cb) => {
+            if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+              cb(null, true);
+            } else {
+              cb(null, false);
+              return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+            }
+          }
 
 }).single('image'))
     
